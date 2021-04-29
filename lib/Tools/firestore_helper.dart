@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirestoreHelper {
+  // Clase encargada de manejar todo lo relacionado a Firestore.
+
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   static Future<void> agregarUsuarioRegistrado(
@@ -19,7 +21,7 @@ class FirestoreHelper {
         .set({'userName': userName})
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));
-    // creo para dicho usuario la collection de todos
+    // creo para dicho usuario la collection de todos con su respectivo timestamp para ordenarlo
     FieldValue timestamp = FieldValue.serverTimestamp();
     users.doc(userID).collection('ToDos').doc('initialNullTodo').set({
       'titulo': 'null initial todo',
@@ -28,7 +30,9 @@ class FirestoreHelper {
       'timestamp': timestamp,
       'estado': 'pendientes',
       'tituloOriginal':
-          'null initial todo', //inmutable, para poder tener un trackin de los documentos.
+          'null initial todo', //inmutable, para poder tener un trackin de los documentos. ya que el nombre del DOCUMENTO no cambiara cuando eventualmente el
+      // usuario quiera modificar su nombre. Si en un futuro el usuario quisiera BORRAR el todo, la app usa el TITULO del todo para hacerlo. es por esto que guardamos
+      // el primer titulo otorgado cuando se creo por primera vez (tituloOriginal) para poder ubicar el todo en la base de datos y eventualmente borrarlo.
     });
   }
 
@@ -73,8 +77,9 @@ class FirestoreHelper {
   static Future<void> eliminarTodo(
       {@required String userID, @required String titulo}) async {
     /*
-   eliminar el todo en cuestion de la base de datos
+    eliminar el todo en cuestion de la base de datos
     */
+
     CollectionReference users = FirebaseFirestore.instance.collection('users');
 
     users
@@ -91,6 +96,7 @@ class FirestoreHelper {
     /*
     Buscar todos del usuario en cuestion de la base de datos y chequear que el titulo que se esta queriendo agregar no exista. Devolver false en caso de que este repetido
     */
+
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     QuerySnapshot snapshot = await users.doc(userID).collection('ToDos').get();
     List listaDeDocs = snapshot.docs.toList();
@@ -108,8 +114,9 @@ class FirestoreHelper {
   static Future<void> cambiarStatusTodo(
       {@required String userID, @required String titulo}) async {
     /*
-        Cambiar el status del Todo en cuestion de pendiente a terminado y viceversa
-        */
+    Cambiar el status del Todo en cuestion de pendiente a terminado y viceversa
+    */
+
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     dynamic doc = await users.doc(userID).collection('ToDos').doc(titulo).get();
     String estadoActual = doc['estado'];
@@ -135,8 +142,9 @@ class FirestoreHelper {
       @required String nuevoTitulo,
       @required String descripcion}) async {
     /*
-        editar el status del Todo en cuestion 
+    editar el contenido del Todo en cuestion 
     */
+
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     FieldValue timestamp = FieldValue.serverTimestamp();
 
@@ -147,10 +155,12 @@ class FirestoreHelper {
       });
     }
     if (descripcion != null && descripcion != '') {
-      users.doc(userID).collection('ToDos').doc(titulo).update({
-        'descripcion': descripcion,
-        'timestamp': timestamp,
-      });
+      users.doc(userID).collection('ToDos').doc(titulo).update(
+        {
+          'descripcion': descripcion,
+          'timestamp': timestamp,
+        },
+      );
     }
   }
 }

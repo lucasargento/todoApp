@@ -5,6 +5,8 @@ import 'package:todo_app/pages/home_page.dart';
 import 'package:todo_app/pages/auth_screen.dart';
 
 class AuthHelper {
+  // Clase encargada de manejar todo lo relacionado a Firebase Authentication.
+
   AuthHelper({@required this.context});
   BuildContext context;
 
@@ -63,7 +65,7 @@ class AuthHelper {
         );
       }
     } catch (e) {
-      print(e);
+      print('Algo salio mal! --> $e');
     }
   }
 
@@ -71,6 +73,7 @@ class AuthHelper {
     /*
     Loggear un nuevo usuario en Fauth con email y pwd
     */
+
     try {
       UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email.trim(), password: password);
@@ -111,6 +114,7 @@ class AuthHelper {
     /*
     Logout de firebase
     */
+
     await FirebaseAuth.instance.signOut().then(
           (value) => Navigator.push(
             context,

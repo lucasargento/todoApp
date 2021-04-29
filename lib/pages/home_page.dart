@@ -29,7 +29,6 @@ class _AHomeScreenState extends State<HomeScreen> {
   AuthHelper authHelper;
   Future listaDeTodosFutura;
   String statusActualLista = 'pendientes';
-  BotonesDeEstado botonesDeEstado;
   String estadoDeLista = 'pendientes';
   String busqueda = '';
 
@@ -42,7 +41,6 @@ class _AHomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    // clear navigation stack!!! pendiente
     authHelper = AuthHelper(context: context);
     busquedaController.addListener(() {
       setState(() {
@@ -83,7 +81,7 @@ class _AHomeScreenState extends State<HomeScreen> {
             children: [
               Expanded(
                 child: Text(
-                  'Esta seguro que quiere cerrar sesión?',
+                  'Está seguro que quiere cerrar sesión?',
                 ),
               ),
               TextButton(
@@ -113,7 +111,6 @@ class _AHomeScreenState extends State<HomeScreen> {
     ancho = MediaQuery.of(context).size.width;
     alto = MediaQuery.of(context).size.height;
     bool keyboardIsOpened = MediaQuery.of(context).viewInsets.bottom != 0.0;
-
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(

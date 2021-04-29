@@ -199,8 +199,7 @@ class _AuthSignUpScreenState extends State<AuthSignUpScreen> {
                                 (Set<MaterialState> states) {
                                   if (states.contains(MaterialState.pressed))
                                     return Theme.of(context).cardColor;
-                                  return Theme.of(context)
-                                      .accentColor; // Use the component's default.
+                                  return Theme.of(context).accentColor;
                                 },
                               ),
                             ),

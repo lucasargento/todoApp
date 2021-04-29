@@ -51,7 +51,6 @@ class _AuthSignInScreenState extends State<AuthSignInScreen> {
   Widget build(BuildContext context) {
     ancho = MediaQuery.of(context).size.width;
     alto = MediaQuery.of(context).size.height;
-
     return chequearSignIn()
         ? Container(
             color: Colors.red,
@@ -172,8 +171,7 @@ class _AuthSignInScreenState extends State<AuthSignInScreen> {
                                 (Set<MaterialState> states) {
                                   if (states.contains(MaterialState.pressed))
                                     return Theme.of(context).cardColor;
-                                  return Theme.of(context)
-                                      .accentColor; // Use the component's default.
+                                  return Theme.of(context).accentColor;
                                 },
                               ),
                             ),

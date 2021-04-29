@@ -64,7 +64,6 @@ class _BarraDeBusquedaState extends State<BarraDeBusqueda> {
           setState(
             () {
               widget.anchoBusqueda = widget.ancho * 0.1;
-              //widget.busquedaController.text = '';
             },
           );
         },

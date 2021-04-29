@@ -170,10 +170,11 @@ class _ToDoWidgetState extends State<ToDoWidget> {
                                             onPressed: () async {
                                               await FirestoreHelper
                                                   .eliminarTodo(
-                                                      userID: widget.userID,
-                                                      titulo: widget.futureList
-                                                              .data[widget.i]
-                                                          ['tituloOriginal']);
+                                                userID: widget.userID,
+                                                titulo: widget.futureList
+                                                        .data[widget.i]
+                                                    ['tituloOriginal'],
+                                              );
                                             },
                                             child: Text('Si'),
                                           ),
